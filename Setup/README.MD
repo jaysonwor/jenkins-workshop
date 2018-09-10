@@ -12,8 +12,8 @@ There are two cloud formation templates:
 * Login to your github account and navigate to this repository
 * Click the fork button to fork this repository in your github workspace (very important only use your forked repository beyond this point)
 
-### Jenkins Setup (Linux)
-* Using one of the cloudformation templates 
+### Jenkins Install (Linux)
+* Using the "cf-jenkins-linux" cloudformation template
 * Open the AWS Console and navigate to the CloudFormation service
 * Click Create Stack and select an existing template to upload
     * choose the cf-jenkins-linux.json file
@@ -27,8 +27,8 @@ There are two cloud formation templates:
 * Upon CREATE_COMPLETE navigate to the "Outputs" tab to get the URL for Jenkins 
 * Done 
 
-### Jenkins Setup (Windows)
-* Using one of the cloudformation templates 
+### Jenkins Install (Windows)
+* Using the "cf-jenkins-windows" cloudformation template 
 * Open the AWS Console and navigate to the CloudFormation service
 * Click Create Stack and select an existing template to upload
     * choose the cf-jenkins-linux.json file
@@ -42,7 +42,12 @@ There are two cloud formation templates:
 * Upon CREATE_COMPLETE navigate to the "Outputs" tab to get the URL for Jenkins 
 * Done 
 
-### Jenkins Configuration
+### Jenkins Post-Install Setup (Windows)
+* Unfortunately there isn't a scripted setup of the tools so the following must be done manually via RDP
+* Download and Setup JDK8+ http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
+* Download and Setup Jenkins https://jenkins.io/download/
+
+### Jenkins Plugin Configuration (Both Windows & Linux)
 * Open Jenkins URL
 * Click Manage Jenkins (left nav)
 * Click Manage Plugins 
