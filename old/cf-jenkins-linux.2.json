@@ -1,7 +1,7 @@
 {
   "AWSTemplateFormatVersion" : "2010-09-09",
 
-  "Description" : "Template for installing Jenkins on Linux",
+  "Description" : "cloud formation template for installing jenkins on linux",
 
   "Parameters" : {
     
@@ -28,11 +28,8 @@
 
                 "sudo yum update –y\n",
                 "sudo yum install java-1.8.0 git -y\n",
-                "sudo wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins.io/redhat/jenkins.repo\n",
-                "sudo rpm --import https://pkg.jenkins.io/redhat/jenkins.io.key\n",
-                "sudo yum install jenkins -y\n",
-                "sed -i 's|$JENKINS_JAVA_OPTIONS|-Djenkins.install.runSetupWizard=false|g' /etc/rc.d/init.d/jenkins\n",
-                "service jenkins start"
+                "wget http://mirrors.jenkins.io/war-stable/latest/jenkins.war\n",
+                "java -Djenkins.install.runSetupWizard=false -jar jenkins.war\n"
                
             ]]}}
         }

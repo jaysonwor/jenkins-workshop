@@ -18,18 +18,17 @@ pipeline {
             }
         }
         stage('Create Infrastructure') {
-            steps {
-            		
-            		script {
-                        sh """
-                            aws --no-verify cloudformation deploy --template-file ${WORKSPACE}/Lab-2/code-samples/cf-infrastructure.json \
-                            --stack-name lab-2 \
-                            --parameter-overrides KeyName=${KeyName} \
-                            """
-                	}
-								
+            steps {          		
+                script {
+                    sh """
+                        aws --no-verify cloudformation deploy --template-file ${WORKSPACE}/Lab-2/code-samples/cf-infrastructure.json \
+                        --stack-name lab-2 \
+                        --parameter-overrides KeyName=${KeyName} \
+                        """
+                }								
             }
         }
+        
        
     }
 }

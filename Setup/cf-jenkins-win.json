@@ -1,7 +1,7 @@
 {
   "AWSTemplateFormatVersion" : "2010-09-09",
 
-  "Description" : "cloud formation template for installing jenkins on windows",
+  "Description" : "Template for installing Jenkins on Windows",
 
   "Parameters" : {
     
@@ -24,8 +24,8 @@
             "KeyName" : { "Ref" : "KeyName" },
             "ImageId" : "ami-accbb6d3",
             "UserData"       : { "Fn::Base64" : { "Fn::Join" : ["", [
-                "#!/bin/bash -xe\n",
-
+                
+               
             ]]}}
         }
     },
@@ -44,6 +44,12 @@
             "IpProtocol" : "tcp",
             "FromPort" : "22",
             "ToPort" : "22",
+            "CidrIp" : "0.0.0.0/0"
+          },
+          {
+            "IpProtocol" : "tcp",
+            "FromPort" : "3389",
+            "ToPort" : "3389",
             "CidrIp" : "0.0.0.0/0"
           } ]
         }
