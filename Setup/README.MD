@@ -1,4 +1,5 @@
 # Overview
+Jenkins Workshop
 
 ## Scope
 There are two cloud formation templates:
@@ -6,6 +7,12 @@ There are two cloud formation templates:
 * cf-linux-windows - install a jenkins instance on an windows based ec2 instance
 
 ## Instructions 
+
+### GitHub Setup
+* Login to your github account and navigate to this repository
+* Click the fork button to fork this repository in your github workspace (very important only use your forked repository beyond this point)
+
+### Jenkins Setup 
 * Using one of the cloudformation templates 
 * Open the AWS Console and navigate to the CloudFormation service
 * Click Create Stack and select an existing template to upload
@@ -19,3 +26,4 @@ There are two cloud formation templates:
     * CREATE_COMPLETE: resources have been built and environment ready 
 * Upon CREATE_COMPLETE navigate to the "Outputs" tab to get the URL for Jenkins 
 * Done 
+

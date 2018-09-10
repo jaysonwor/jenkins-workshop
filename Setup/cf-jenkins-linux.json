@@ -56,7 +56,7 @@
   "Outputs" : {
     "JenkinsURL" : {
       "Description" : "URL for Jenkins",
-      "Value" : { "Fn::Join" : ["", ["http://", { "Fn::GetAtt" : [ "EC2Instance", "PublicDns" ]} ]] }
+      "Value" : { "Fn::Join" : ["", ["http://", { "Fn::GetAtt" : [ "EC2Instance", "PublicIp" ]} ]] }
     }
   }
 }
