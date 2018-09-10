@@ -24,6 +24,7 @@ pipeline {
                         aws --no-verify cloudformation deploy --template-file ${WORKSPACE}/Lab-2/code-samples/cf-infrastructure.json \
                         --stack-name lab-2 \
                         --parameter-overrides KeyName=${KeyName} \
+                        --region us-east-1
                         """
                 }								
             }
