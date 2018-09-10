@@ -7,8 +7,8 @@ properties([
 pipeline {
     agent any
     environment {
-        AWS_ACCESS_KEY_ID = credentials('78a0dfbf-a6a8-4315-a354-20c1ed65387c')
-        AWS_SECRET_ACCESS_KEY = credentials('40662740-d02a-4628-882f-aa0a619e1e9e')
+        AWS_ACCESS_KEY_ID = credentials('d3cf4e66-1c8b-412a-9e5e-6c2f568f7d81')
+        AWS_SECRET_ACCESS_KEY = credentials('07db0801-b4ad-4fb2-ae2f-1abd50d2b438')
 
     }
     stages {
