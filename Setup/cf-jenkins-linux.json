@@ -22,7 +22,7 @@
             "InstanceType" : "t2.micro",
             "SecurityGroups" : [ {"Ref" : "SecurityGroup"} ],
             "KeyName" : { "Ref" : "KeyName" },
-            "ImageId" : "ami-00fcc917",
+            "ImageId" : "ami-00624b7b",
             "UserData"       : { "Fn::Base64" : { "Fn::Join" : ["", [
                 "#!/bin/bash -xe\n",
                 "sed -i 's|<useSecurity>true|<useSecurity>false|g' /opt/bitnami/apps/jenkins/jenkins_home/config.xml\n",
