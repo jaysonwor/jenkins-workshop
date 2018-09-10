@@ -1,0 +1,35 @@
+properties([
+    parameters([
+    string(defaultValue: 'pem', description: 'cloudformation key pair to use', name: 'KeyName')
+    ]),
+    pipelineTriggers([])
+])
+pipeline {
+    agent any
+    environment {
+        AWS_ACCESS_KEY_ID = credentials('78a0dfbf-a6a8-4315-a354-20c1ed65387c')
+        AWS_SECRET_ACCESS_KEY = credentials('40662740-d02a-4628-882f-aa0a619e1e9e')
+
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+        stage('Create Infrastructure') {
+            steps {
+            		
+            		script {
+                        sh """
+                            aws --no-verify cloudformation deploy --template-file ${WORKSPACE}/Lab-2/code-samples/cf-infrastructure.json \
+                            --stack-name lab-2 \
+                            --parameter-overrides KeyName=${KeyName} \
+                            """
+                	}
+								
+            }
+        }
+       
+    }
+}
