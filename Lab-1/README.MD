@@ -25,4 +25,4 @@ Being able to create a jenkins job using the UI is good, but doesn't scale, the 
 
 ### Caveats & Gotchas
 * You may either use the .py code sample provided under code-samples or write your own
-* Note: if you run this script in the job the job will never terminate. Feel free to figure out how to run the background, or just kill the job every time... don't worry we'll address this in the next Lab-2
+* Note: if you run this script in the job the job will never terminate. Feel free to figure out how to run the background, or just kill the job every time... 
