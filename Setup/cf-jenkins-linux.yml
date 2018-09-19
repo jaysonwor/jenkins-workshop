@@ -9,25 +9,87 @@ Parameters:
     AllowedPattern: .+
 
 Resources:
-  EC2Instance:
+  JenkinsServer:
     Type: AWS::EC2::Instance
+    Metadata:
+      Comment: Install Jenkins
+      AWS::CloudFormation::Init:
+        config:
+          packages:
+            yum:
+              java-1.8.0-openjdk-devel: []
+              #jenkins: []
+              git: []
+          files:
+            '/etc/cfn/cfn-hup.conf':
+              content: !Sub |
+                [main]
+                stack=${AWS::StackId}
+                region=${AWS::Region}
+              mode: '000400'
+              owner: root
+              group: root
+            '/etc/cfn/hooks.d/cfn-auto-reloader.conf':
+              content: !Sub |
+                [cfn-auto-reloader-hook]
+                triggers=post.update
+                path=Resources.JenkinsServer.Metadata.AWS::CloudFormation::Init
+                action=/opt/aws/bin/cfn-init -v --stack=${AWS::StackName} --region=${AWS::Region} --resource=JenkinsServer 
+                runas=root
+              mode: '000400'
+              owner: root
+              group: root
+          commands:
+            download_repo:
+              command: wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins.io/redhat/jenkins.repo
+            configure_key:
+              command: rpm --import https://pkg.jenkins.io/redhat/jenkins.io.key
+            install_jenkins:
+              command: yum install jenkins -y
+            remove_wizard:
+              command: sed -i 's|$JENKINS_JAVA_OPTIONS|-Djenkins.install.runSetupWizard=false|g' /etc/rc.d/init.d/jenkins
+            start_service:
+              command: service jenkins start          
+          services:
+            sysvinit:
+              #jenkins:
+              #  enabled: true
+              #  ensureRunning: true
+              cfn-hup:
+                enabled: true
+                ensureRunning: true
+                files:
+                  - '/etc/cfn/cfn-hup.conf'
+                  - '/etc/cfn/hooks.d/cfn-auto-reloader.conf' 
     Properties:
       InstanceType: t2.micro
       SecurityGroups:
-        - !Ref 'SecurityGroup'
+        - !Ref 'JenkinsSecurityGroup'
       KeyName: !Ref 'KeyName'
       ImageId: ami-04681a1dbd79675a5
       UserData: 
-        Fn::Base64: |
-          #!/bin/bash -xe
-          yum update -y
-          yum install java-1.8.0 git -y
-          wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins.io/redhat/jenkins.repo
-          rpm --import https://pkg.jenkins.io/redhat/jenkins.io.key
-          yum install jenkins -y
-          sed -i 's|$JENKINS_JAVA_OPTIONS|-Djenkins.install.runSetupWizard=false|g' /etc/rc.d/init.d/jenkins
-          service jenkins start
-  SecurityGroup:
+        Fn::Base64: !Sub |
+          #!/bin/bash -xe      
+          #yum update -y
+          #yum update -y aws-cfn-bootstrap
+          #yum remove -y java
+          #yum install java-1.8.0 git -y
+          #wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins.io/redhat/jenkins.repo
+          #rpm --import https://pkg.jenkins.io/redhat/jenkins.io.key
+          #yum install jenkins -y
+          #sed -i 's|$JENKINS_JAVA_OPTIONS|-Djenkins.install.runSetupWizard=false|g' /etc/rc.d/init.d/jenkins
+          #service jenkins start
+          # Start cfn-init          
+          /opt/aws/bin/cfn-init -v --stack ${AWS::StackName} --resource JenkinsServer --region ${AWS::Region}
+           # Start up the cfn-hup daemon to listen for changes to the EC2 instance metadata
+          #/opt/aws/bin/cfn-hup || error_exit 'Failed to start cfn-hup'
+          #All done so signal success          
+          /opt/aws/bin/cfn-signal -e $? --region ${AWS::Region} --stack ${AWS::StackName} --resource JenkinsServer  
+    CreationPolicy:
+      ResourceSignal:
+        Timeout: PT5M
+
+  JenkinsSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: rules for opening the web and ssh ports
@@ -47,5 +109,5 @@ Outputs:
     Value: !Join
       - ''
       - - http://
-        - !GetAtt 'EC2Instance.PublicIp'
+        - !GetAtt 'JenkinsServer.PublicIp'
         - :8080
