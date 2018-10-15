@@ -69,22 +69,15 @@ Resources:
       ImageId: ami-04681a1dbd79675a5
       UserData: 
         Fn::Base64: !Sub |
-          #!/bin/bash -xe      
-          #yum update -y
-          #yum update -y aws-cfn-bootstrap
-          #yum remove -y java
-          #yum install java-1.8.0 git -y
-          #wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins.io/redhat/jenkins.repo
-          #rpm --import https://pkg.jenkins.io/redhat/jenkins.io.key
-          #yum install jenkins -y
-          #sed -i 's|$JENKINS_JAVA_OPTIONS|-Djenkins.install.runSetupWizard=false|g' /etc/rc.d/init.d/jenkins
-          #service jenkins start
-          # Start cfn-init          
-          /opt/aws/bin/cfn-init -v --stack ${AWS::StackName} --resource JenkinsServer --region ${AWS::Region}
-           # Start up the cfn-hup daemon to listen for changes to the EC2 instance metadata
-          #/opt/aws/bin/cfn-hup || error_exit 'Failed to start cfn-hup'
-          #All done so signal success          
-          /opt/aws/bin/cfn-signal -e $? --region ${AWS::Region} --stack ${AWS::StackName} --resource JenkinsServer  
+          #!/bin/bash -xe
+          # Get the latest CloudFormation package
+          yum update -y aws-cfn-bootstrap
+          # Start cfn-init
+          /opt/aws/bin/cfn-init -v --stack ${AWS::StackId} --resource JenkinsServer --region ${AWS::Region} || error_exit 'Failed to run cfn-init'
+          # Start up the cfn-hup daemon to listen for changes to the EC2 instance metadata
+          /opt/aws/bin/cfn-hup || error_exit 'Failed to start cfn-hup'
+          # All done so signal success
+          /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackId} --resource JenkinsServer --region ${AWS::Region}
     CreationPolicy:
       ResourceSignal:
         Timeout: PT5M
