@@ -7,12 +7,14 @@ These Lab-1 exercises will get you familar with a basic pattern for grabbing and
 ## Instructions 
 ### Simple Exercise 
 * Open the Jenkins URL (found in setup) 
+    * Just choose defaults through the jenkins setup wizard
 * Create a new job (new item)
 * Enter a unique item name and choose freestyle project 
 * Configure this job to 
     * Checkout using GIT (Source Code Mgmt) from your forked GitHub repository (during setup)
     * Specify build instructions (either CMD (Windows) or SH (Windows) command) to start a simple http server 
-* Run the job and validate you can hit the web browser url
+* Run the job and validate you can hit the web browser url 
+    * I.e https://$JENKINS_URL:PORT should say hello to the whole world ;)
 
 ### Advanced Exercise
 Being able to create a jenkins job using the UI is good, but doesn't scale, the real power comes from Jenkins ability to define a job/pipeline in code (I.E in a Jenkinsfile). More can be found on jenkins pipeline here: https://jenkins.io/doc/book/pipeline/
