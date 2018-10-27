@@ -16,7 +16,7 @@ There are two cloud formation templates:
 * Using the "cf-jenkins-linux" cloudformation template
 * Open the AWS Console and navigate to the CloudFormation service
 * Click Create Stack and select an existing template to upload
-    * choose the cf-jenkins-linux.json file
+    * choose the cf-jenkins-linux.yml file
 * Click Next
 * Input a unique stack name and existing KeyPair from the drop down (keypair was created as part of the prerequisite above)
 * Click Next past the next two screens and finally Create
@@ -31,7 +31,7 @@ There are two cloud formation templates:
 * Using the "cf-jenkins-windows" cloudformation template 
 * Open the AWS Console and navigate to the CloudFormation service
 * Click Create Stack and select an existing template to upload
-    * choose the cf-jenkins-linux.json file
+    * choose the cf-jenkins-win.json file
 * Click Next
 * Input a unique stack name and existing KeyPair from the drop down (keypair was created as part of the prerequisite above)
 * Click Next past the next two screens and finally Create

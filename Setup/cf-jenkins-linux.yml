@@ -1,6 +1,13 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: "Template for installing Jenkins on Linux *delete when done*"
 
+Parameters:
+  KeyName:
+    Description: Name of an existing EC2 KeyPair to enable SSH access to the instances
+    Type: AWS::EC2::KeyPair::KeyName
+    ConstraintDescription: must be the name of an existing EC2 KeyPair.
+    AllowedPattern: .+
+
 Resources:
   JenkinsServer:
     Type: AWS::EC2::Instance
@@ -102,6 +109,7 @@ Resources:
       InstanceType: t2.micro
       SecurityGroups:
         - !Ref 'JenkinsSecurityGroup'
+      KeyName: !Ref 'KeyName'
       ImageId: ami-0922553b7b0369273
       UserData: 
         Fn::Base64: !Sub |
